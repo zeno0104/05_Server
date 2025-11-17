@@ -43,10 +43,5 @@ public class ExampleController3 extends HttpServlet {
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/result2.jsp");
 		dispatcher.forward(request, response);
-		/*
-		 * RequestDispatcher dispatcher =
-		 * request.getRequestDispatcher("/WEB-INF/views/result2.jsp");
-		 * dispatcher.forward(request, response);
-		 */
 	}
 }
