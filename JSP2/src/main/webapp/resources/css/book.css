@@ -1,0 +1,9 @@
+table {
+	border-collapse: collapse;
+}
+
+#bg {
+	background-color: gray;
+	color: grey;
+	border-color: gray;
+}

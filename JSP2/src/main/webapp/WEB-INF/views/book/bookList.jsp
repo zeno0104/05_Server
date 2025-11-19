@@ -9,17 +9,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>과제</title>
-<style type="text/css">
-table {
-	border-collapse: collapse;
-}
+<title>책 목록 조회</title>
 
-#bg {
-	background-color: grey;
-	color: grey;
-	border-color: grey
-}
+<!-- 
+	CSS/JS 파일은 브라우저에서 직접 요청하는 정적 파일
+	이런 정적 콘텐츠는 브라우저에서 직접 접근 가능해야하므로
+	webapp 폴더 하위에 있어야함.
+	WEB-INF 폴더 안에 넣으면 인식 X
+	
+	webapp 기준으로 작성
+ -->
+<link rel="stylesheet" href="/resources/css/book.css" />
+<style type="text/css">
 </style>
 </head>
 <body>
@@ -38,17 +39,20 @@ table {
 
 		<c:forEach var="book" items="${bookList}" varStatus="vs">
 			<tr>
-				<th id="num">${vs.count}</th>
+				<th>${vs.count}</th>
 				<td>${book.title}</td>
 				<td>${book.writer}</td>
 				<td>${book.price}</td>
 			</tr>
+			<%-- 3배수 번째 반복 시 --%>
 			<c:if test="${vs.count % 3 == 0}">
 				<tr id="bg">
-					<td id="num" colspan='4'>${vs.count}</td>
+					<td id="num" colspan='4'>&nbsp;</td>
 				</tr>
 			</c:if>
 		</c:forEach>
 	</table>
+	<!-- webapp 폴더 기준 -->
+	<script src="/resources/js/book.js" />
 </body>
 </html>
