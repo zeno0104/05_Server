@@ -49,6 +49,7 @@
 	
 	<%
 	// page scope 객체에 값 세팅
+	
 	pageContext.setAttribute("pageValue", "page scope 객체에 세팅한 값");
 	// pageValue=page scope 객체에 세팅한 값
 	%>

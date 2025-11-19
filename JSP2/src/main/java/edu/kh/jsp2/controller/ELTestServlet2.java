@@ -64,11 +64,11 @@ public class ELTestServlet2 extends HttpServlet {
 		// applicationValue = application scope 객체에 세팅한 값
 
 		// ---------------------------------
-		
+
 		// 범위별 우선순위 확인!!!
 		// 좁은 범위가 우선순위가 높다!
 		// page > request > session > application
-		
+
 		// key값을 동일하게 하여 범위별 객체에 값 추가
 		request.setAttribute("menu", "짬뽕(reqeust)");
 		session.setAttribute("menu", "짜장(session)");
