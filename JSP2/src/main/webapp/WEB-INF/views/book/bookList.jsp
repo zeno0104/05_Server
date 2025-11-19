@@ -37,9 +37,8 @@ table {
 		</tr>
 
 		<c:forEach var="book" items="${bookList}" varStatus="vs">
-			<tr style="backgroundColor: 'black'">
-				<th id="num">${vs.count}
-				</td>
+			<tr>
+				<th id="num">${vs.count}</th>
 				<td>${book.title}</td>
 				<td>${book.writer}</td>
 				<td>${book.price}</td>
