@@ -116,4 +116,86 @@ public class TodoListDAOImpl implements TodoListDAO {
 		return result;
 	}
 
+	@Override
+	public Todo todoDetail(Connection conn, int todoNo) throws Exception {
+		Todo todo = null; // 결과 저장용 변수 선언
+
+		try {
+			String sql = prop.getProperty("todoDetail");
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, todoNo);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				boolean complete = rs.getInt("TODO_COMPLETE") == 1;
+				String todoTitle = rs.getString("TODO_TITLE");
+				String todoDetail = rs.getString("TODO_DETAIL");
+				String regDate = rs.getString("REG_DATE");
+
+				todo = Todo.builder().todoNo(todoNo).todoComplete(complete).todoTitle(todoTitle).todoDetail(todoDetail)
+						.regDate(regDate).build();
+			}
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return todo;
+	}
+
+	@Override
+	public int todoComplete(Connection conn, int todoNo) throws Exception {
+		int result = 0;
+
+		try {
+			String sql = prop.getProperty("todoComplete");
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, todoNo);
+
+			result = pstmt.executeUpdate();
+
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	@Override
+	public int todoDelete(Connection conn, int todoNo) throws Exception {
+		int result = 0;
+
+		try {
+			String sql = prop.getProperty("todoDelete");
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, todoNo);
+
+			result = pstmt.executeUpdate();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	@Override
+	public int todoUpdate(Connection conn, int todoNo, String title, String detail) throws Exception {
+		int result = 0;
+
+		try {
+			String sql = prop.getProperty("todoUpdate");
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, title);
+			pstmt.setString(2, detail);
+			pstmt.setInt(3, todoNo);
+
+			result = pstmt.executeUpdate();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 }

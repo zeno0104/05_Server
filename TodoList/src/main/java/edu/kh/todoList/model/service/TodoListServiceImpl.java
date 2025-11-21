@@ -14,53 +14,112 @@ import static edu.kh.todoList.common.JDBCTemplate.*;
 public class TodoListServiceImpl implements TodoListService {
 	// Impl은 구현체라는 의미
 	// 즉, interface를 구체화하는 작업을 여기서 진행
-	
+
 	private TodoListDAO dao = new TodoListDAOImpl();
-	
+
 	@Override
 	public Map<String, Object> todoListFullView() throws Exception {
-		
+
 		// 커넥션 생성
 		Connection conn = getConnection();
-		
+
 		// dao 호출 및 반환받기
 		// 1) 할 일 목록 얻어오기
 		List<Todo> todoList = dao.todoListFullView(conn);
-		
+
 		// 2) 완료된 할 일 갯수 카운트
-		
+
 		int completeCount = dao.getCompleteCount(conn);
-		
+
 		// Map에 1, 2번으로 얻어온 데이터들을 세팅하여 리턴
 		// -> 메서드에서 반환은 하나의 값 또는 객체밖에 할 수 없기 때문
 		// Map이라는 컬렉션을 이용해 여러 형태의 값을 한번에 묶어서 반환
-		
+
 		Map<String, Object> map = new HashMap<>();
-		
+
 		map.put("todoList", todoList);
 		map.put("completeCount", completeCount);
-		
+
 		close(conn);
-		
+
 		return map;
 	}
 
-
 	@Override
 	public int todoAdd(String title, String detail) throws Exception {
-		
+
 		Connection conn = getConnection();
-		
+
 		int result = dao.todoAdd(conn, title, detail);
-		
+
 		// DML -> 트랜잭션 제어처리
-		if(result > 0) {
+		if (result > 0) {
 			commit(conn);
 		} else {
 			rollback(conn);
 		}
 		close(conn);
-		
+
 		return result;
 	}
+
+	@Override
+	public Todo todoDetail(int todoNo) throws Exception {
+		Connection conn = getConnection();
+
+		Todo todo = dao.todoDetail(conn, todoNo);
+
+		close(conn);
+
+		return todo;
+	}
+
+	@Override
+	public int todoComplete(int todoNo) throws Exception {
+		Connection conn = getConnection();
+
+		int result = dao.todoComplete(conn, todoNo);
+
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+
+		return result;
+	}
+
+	@Override
+	public int todoDelete(int todoNo) throws Exception {
+		Connection conn = getConnection();
+
+		int result = dao.todoDelete(conn, todoNo);
+
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+
+		return result;
+	}
+
+	@Override
+	public int todoUpdate(int todoNo, String title, String detail) throws Exception{
+		Connection conn = getConnection();
+
+		int result = dao.todoUpdate(conn, todoNo, title, detail);
+
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+
+		return result;
+	}
+
 }
